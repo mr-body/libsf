@@ -3,7 +3,7 @@
 void on_button_click(Tool *widget, Pointer user_data)
 {
 	Window *dados = new_window("teste", 100, 100);
-    loop(dados);
+	loop(dados);
 }
 
 void on_text_entry_changed(Tool *widget, Pointer user_data)
