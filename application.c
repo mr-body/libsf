@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
 {
 	Application(argc, argv);
 
-		Window  *window = create_window("First Application", 400, 300);
+		Window  *window = create_window("First Application", 800, 500);
 		ft_render_objects(window);
 		g_timeout_add(1000, on_loop, NULL); 
 
