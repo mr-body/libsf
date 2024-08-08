@@ -2,7 +2,7 @@
 
 void on_button_click(Tool *widget, Pointer user_data)
 {
-	Window *dados = new_window("teste", 100, 100);
+	Window *dados = new_window("teste", 800, 800);
 	loop(dados);
 }
 
