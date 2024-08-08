@@ -1,34 +1,24 @@
-# Nome do compilador
-CC = gcc
-# Flags de compilação
-CFLAGS = `pkg-config --cflags gtk+-3.0`
+NAME = app
+GCC = gcc
+SRC = *.c
+FLGS =  -I./includes -I./lib -L./lib -lsf `pkg-config --cflags --libs gtk+-3.0`
+OBJS = ${SRC:.c=.o}
 
-LIB_NAME = libsf.a
+all: ${NAME}
 
-OBSJ = lib_sf.c 
+${NAME}:
+	${GCC} -o ${NAME} ${SRC} ${FLGS}
 
-SRC = $(OBSJ)
-OBJ = $(SRC:.c=.o)
-
-INCLUDES = -I.
-
-GTKFLAGS = `pkg-config --libs gtk+-3.0`
-
-all: $(LIB_NAME)
-	clear
-
-$(LIB_NAME): $(OBJ)
-	ar rcs $(LIB_NAME) $(OBJ)
-
-%.o: %.c
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 clean:
-	rm -f $(OBJ)
+	rm -f ${OBJ}
+
 fclean: clean
-	rm -f $(LIB_NAME)
+	rm -f ${NAME}
+
+git: fclean
+	git add .
+	git commit -m ${NAME}
+	git push -o origin HEAD
+
 re: fclean all
-
-.PHONY: all clean fclean re test
-
-
-# test gcc -o programa test.c -I./libsf-s -L./libsf-s -lsf `pkg-config --cflags --libs gtk+-3.0`
+    

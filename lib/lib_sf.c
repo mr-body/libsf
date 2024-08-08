@@ -14,7 +14,14 @@
 
 GtkWidget*	add_fixed_layout_to_window(GtkWidget *window);
 
-GtkWidget	*create_window_s(const char *title, int width, int height);
+GtkWidget	*create_window(const char *title, int width, int height);
+
+void		hook(GtkWidget *widget, const gchar *event_name, GCallback callback, gpointer user_data);
+void		hide_widget(GtkWidget *widget);
+void		pixel_put(GtkWidget *drawing_area, int x, int y, double red, double green, double blue);
+void		hook_key(GtkWidget *widget, void (*key_handler)(GdkEventKey *event, gpointer user_data), gpointer user_data);
+void		set_size(GtkWidget *widget, int width, int height);
+
 GtkWidget	*add_button(GtkWidget *container, const char *label, int x, int y, GCallback callback);
 GtkWidget	*add_label(GtkWidget *container, const char *text, int x, int y);
 GtkWidget	*add_entry(GtkWidget *container, int x, int y, GCallback callback);
@@ -89,11 +96,12 @@ GtkWidget	*create_color_chooser_with_position(GtkWidget *container, int x, int y
 void	color_activated(GtkColorChooser *chooser, gpointer user_data);
 
 // Function to create a simple window
-GtkWidget	*create_window_s(const char *title, int width, int height)
+GtkWidget	*create_window(const char *title, int width, int height)
 {
 	GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 	gtk_window_set_title(GTK_WINDOW(window), title);
 	gtk_window_set_default_size(GTK_WINDOW(window), width, height);
+	g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
 	return (window);
 }
 
@@ -471,7 +479,7 @@ void	add_to_grid(GtkGrid *grid, GtkWidget *widget,
 // Function to create a new window
 GtkWidget	*new_window(const char *title, int width, int height)
 {
-	return (create_window_s(title, width, height));
+	return (create_window(title, width, height));
 }
 
 // Function to apply CSS to a widget
@@ -1863,3 +1871,29 @@ GtkWidget	*create_quick_icon_section(const char *icon_name, const char *text)
 	return (box);
 }
 
+// Função para ocultar um widget
+void hide_widget(GtkWidget *widget)
+{
+    if (GTK_IS_WIDGET(widget))
+    {
+        gtk_widget_hide(widget);
+    }
+}
+
+// Função para exibir um widget
+void show_widget(GtkWidget *widget)
+{
+    if (GTK_IS_WIDGET(widget))
+    {
+        gtk_widget_show(widget);
+    }
+}
+
+// Função genérica para conectar um callback a um evento de um widget
+void hook(GtkWidget *widget, const gchar *event_name, GCallback callback, gpointer user_data)
+{
+    if (GTK_IS_WIDGET(widget) && event_name != NULL && callback != NULL)
+    {
+        g_signal_connect(widget, event_name, callback, user_data);
+    }
+}
