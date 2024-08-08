@@ -18,7 +18,7 @@ fclean: clean
 git: fclean
 	git add .
 	git commit -m ${NAME}
-	git push -o origin HEAD
+	git push -u origin HEAD
 
 re: fclean all
     
