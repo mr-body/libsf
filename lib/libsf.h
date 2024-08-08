@@ -88,6 +88,7 @@
 # define Type GtkWidget
 # define EventKey GdkEventKey
 # define Pointer gpointer
+# define Style const char
 
 
 // Estruturas de dados
